@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:ez="http://java.sun.com/jsf/composite/mycomponents"
+        >
+<f:metadata>
+    <f:viewParam name="idArticle" value="#{articleManagedBean.idArticle}">
+
+    </f:viewParam>
+    <f:event type="preRenderView" listener="#{articleManagedBean.initParamsView()}"/>
+</f:metadata>
+<h:body>
+    <ui:composition template="/templates/layout.xhtml">
+        <ui:define name="titre">Ajouter un article</ui:define>
+        <ui:define name="contenu">
+
+
+            <h:form>
+                <p:panel header="Ajouter un article">
+                    <table>
+                        <tr>
+                            <td>
+                                ID
+                            </td>
+                            <td colspan="2">
+                                #{articleManagedBean.currentArticle.id}
+                            </td>
+                                     <h:inputHidden id="id" value="#{articleManagedBean.currentArticle.id}"/>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel for="articleTitre" value="Titre"/>
+                            </td>
+                            <td>
+                                <h:inputText id="articleTitre" value="#{articleManagedBean.currentArticle.titre}"/>
+                            </td>
+                            <td>
+                                <h:message for="articleTitre"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel for="articleContenu" value="Contenu"/>
+                            </td>
+                            <td>
+                                <h:inputTextarea id="articleContenu"
+                                                 value="#{articleManagedBean.currentArticle.contenu}"/>
+                            </td>
+                            <td>
+                                <h:message for="articleContenu"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&#160;</td>
+                            <td colspan="2">
+                                <h:commandButton action="#{articleManagedBean.doSave}" value="Enregistrer"/>
+
+                                <!--
+                                  navigation implicite, le modele de navigation regarde si une page correspond a l'action
+                                  dans ce cas precis c'est index.xhtml qui va etre affiche
+                                -->
+                                <h:button outcome="index" value="Annuler"/>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </p:panel>
+            </h:form>
+
+
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>
+
+

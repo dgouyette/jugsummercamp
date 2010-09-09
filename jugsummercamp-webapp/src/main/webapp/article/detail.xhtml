@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:mycomponents="http://java.sun.com/jsf/composite/mycomponents"
+        >
+<h:head>
+    <link type="text/css" rel="stylesheet" href="/css/humanity/skin.css"/>
+    <f:metadata>
+        <f:viewParam name="idArticle" value="#{articleManagedBean.idArticle}">
+        </f:viewParam>
+        <f:event type="preRenderComponent" listener="#{articleManagedBean.initParamsView()}"/>
+    </f:metadata>
+</h:head>
+<h:body>
+
+    <ui:composition template="/templates/layout.xhtml">
+        <ui:define name="contenu">
+
+            <h:link outcome="index" value="Accueil"/>
+
+
+            <p:panel header="#{articleManagedBean.currentArticle.titre}">
+                <H1>idArticle : <h:outputText value="#{articleManagedBean.idArticle}"/></H1>
+                <h:outputText value="#{articleManagedBean.currentArticle.contenu}"/>
+            </p:panel>
+            <hr/>
+
+
+
+            <ui:repeat var="commentaire" value="#{articleManagedBean.commentaires}">
+                Commentaire de&#160;<h:link value="#{commentaire.email}"/> <br/>
+                <h:outputText value="#{commentaire.contenu}"/>
+                <hr/>
+            </ui:repeat>
+
+            <hr/>
+
+            <p:panel header="Ajouter un commentaire">
+                <h:form>
+                    <f:ajax render="@form">
+                    <h:messages id="errors" layout="table" styleClass="error"/>
+                    <h:panelGrid id="notifications" rendered="#{flash.success!=null}" styleClass="success">
+                        <h:outputText value="#{flash.success}" escape="false"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="email" value="Email : "/>
+
+
+                        <h:inputText label="Email " id="email" value="#{articleManagedBean.currentCommentaire.email}">
+
+                        </h:inputText>
+
+                        <h:outputLabel for="contenu" value="Contenu : "/>
+                        <h:inputTextarea label="Contenu " id="contenu" value="#{articleManagedBean.currentCommentaire.contenu}">
+                            <f:ajax render="@form"/>
+                        </h:inputTextarea>
+
+                        <h:inputHidden value="#{articleManagedBean.idArticle}"/>
+
+                        <h:commandButton action="#{articleManagedBean.doSaveCommentaire}" value="Enregistrer">
+                                    <f:ajax execute="@form" render="@all"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+                     </f:ajax>
+                </h:form>
+
+
+
+            </p:panel>
+
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+</html>
+
+
