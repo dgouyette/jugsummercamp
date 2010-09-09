@@ -1,0 +1,1 @@
+Sources correspondant à la présentation JSF2 du jugsummercamp http://sites.google.com/site/jugsummercamp/
